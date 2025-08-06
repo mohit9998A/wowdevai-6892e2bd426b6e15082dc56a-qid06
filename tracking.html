@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Tracking - FastTag Manager</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://use.typekit.net/yjp3aho.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'sofia': ['sofia-pro', 'sans-serif']
+          },
+          colors: {
+            'neon-blue': '#00f5ff',
+            'neon-purple': '#9d00ff',
+            'dark-bg': '#0a0a0f',
+            'card-bg': '#1a1a24'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sofia bg-gradient-to-br from-dark-bg via-gray-900 to-purple-900 min-h-screen">
+  <div id="navbar-container" data-source="components/navbar.html"></div>
+  
+  <main class="pt-20 px-4 py-8">
+    <div class="container mx-auto max-w-7xl">
+      <!-- Header -->
+      <div data-id="tracking-header" class="mb-8">
+        <h1 data-id="tracking-title" class="text-3xl md:text-4xl font-bold text-white mb-2">
+          Live Vehicle Tracking
+        </h1>
+        <p data-id="tracking-subtitle" class="text-gray-400">Real-time location and journey monitoring</p>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Map Section -->
+        <div data-id="map-section" class="lg:col-span-2">
+          <div class="bg-card-bg/50 backdrop-blur-lg border border-gray-800 rounded-2xl p-6 h-96">
+            <div class="flex items-center justify-between mb-4">
+              <h2 class="text-xl font-bold text-white">Current Location</h2>
+              <div class="flex space-x-2">
+                <button data-id="refresh-location" class="bg-neon-blue/20 text-neon-blue p-2 rounded-lg hover:bg-neon-blue/30 transition-colors duration-300">
+                  <i data-lucide="refresh-cw" class="w-5 h-5"></i>
+                </button>
+                <button data-id="center-map" class="bg-gray-800 text-white p-2 rounded-lg hover:bg-gray-700 transition-colors duration-300">
+                  <i data-lucide="crosshair" class="w-5 h-5"></i>
+                </button>
+              </div>
+            
+              <!-- Mock Map -->
+              <div class="relative h-80 bg-gray-800 rounded-xl overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?w=800&h=400&fit=crop&crop=center" 
+                     alt="Map view" class="w-full h-full object-cover opacity-60">
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="bg-neon-blue/90 text-white p-4 rounded-xl backdrop-blur-sm">
+                    <div class="flex items-center space-x-2">
+                      <i data-lucide="map-pin" class="w-6 h-6 text-white"></i>
+                      <div>
+                        <p class="font-semibold">Current Location</p>
+                        <p class="text-sm opacity-90">Delhi-Gurgaon Highway</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Moving Vehicle Indicator -->
+                <div data-id="vehicle-marker" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 animate-pulse">
+                  <div class="w-6 h-6 bg-neon-blue rounded-full flex items-center justify-center">
+                    <i data-lucide="car" class="w-4 h-4 text-white"></i>
+                  </div>
+                  <div class="w-12 h-12 bg-neon-blue/30 rounded-full absolute -top-3 -left-3 animate-ping"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Vehicle Info -->
+          <div data-id="vehicle-info" class="space-y-6">
+            <!-- Live Status -->
+            <div class="bg-card-bg/50 backdrop-blur-lg border border-gray-800 rounded-2xl p-6">
+              <div class="flex items-center space-x-3 mb-4">
+                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <h3 class="text-xl font-bold text-white">Live Status</h3>
+              </div>
+              
+              <div class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-400">Vehicle</span>
+                  <span class="text-white font-semibold">DL 01 AB 1234</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-400">Speed</span>
+                  <span class="text-neon-blue font-semibold">65 km/h</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-400">Direction</span>
+                  <span class="text-white font-semibold">Northeast</span>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-gray-400">Last Update</span>
+                  <span class="text-green-400 font-semibold">2 sec ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      <!-- Vehicle Information Section -->
+      <div class="space-y-6">
+        <!-- Vehicle Performance Overview -->
+        <div class="bg-gradient-to-r from-purple-600/20 to-blue-600/20 backdrop-blur-md rounded-2xl p-6 border border-purple-500/30">
+          <div class="flex items-center justify-between mb-6">
+            <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+              <i data-lucide="activity" class="text-purple-400"></i>
+              Live Vehicle Performance
+            </h2>
+            <div class="flex items-center gap-2 px-4 py-2 bg-green-500/20 text-green-400 rounded-full text-sm font-medium border border-green-500/30">
+              <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              Real-time Data
+            </div>
+          </div>
+
+          <!-- Performance Metrics Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white/10 rounded-xl p-4 text-center border border-white/10">
+              <div class="text-2xl font-bold text-neon-blue mb-1" data-id="current-speed">65</div>
+              <div class="text-sm text-white/70">km/h</div>
+              <div class="text-xs text-green-400 mt-1">↗ +2 km/h</div>
+            </div>
+            <div class="bg-white/10 rounded-xl p-4 text-center border border-white/10">
+              <div class="text-2xl font-bold text-orange-400 mb-1">8.5</div>
+              <div class="text-sm text-white/70">L/100km</div>
+              <div class="text-xs text-yellow-400 mt-1">Efficient</div>
+            </div>
+            <div class="bg-white/10 rounded-xl p-4 text-center border border-white/10">
+              <div class="text-2xl font-bold text-purple-400 mb-1">32°C</div>
+              <div class="text-sm text-white/70">Engine</div>
+              <div class="text-xs text-green-400 mt-1">Normal</div>
+            </div>
+            <div class="bg-white/10 rounded-xl p-4 text-center border border-white/10">
+              <div class="text-2xl font-bold text-blue-400 mb-1">98%</div>
+              <div class="text-sm text-white/70">Health</div>
+              <div class="text-xs text-green-400 mt-1">Excellent</div>
+            </div>
+          </div>
+
+          <!-- Journey Progress Bar -->
+          <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="text-lg font-semibold text-white">Current Journey Progress</h3>
+              <span class="text-neon-blue font-bold">68%</span>
+            </div>
+            <div class="relative">
+              <div class="w-full bg-gray-700 rounded-full h-3">
+                <div class="bg-gradient-to-r from-purple-500 to-neon-blue h-3 rounded-full transition-all duration-1000" style="width: 68%"></div>
+              </div>
+              <div class="absolute -top-8 left-2/3 transform -translate-x-1/2">
+                <div class="bg-neon-blue text-white px-2 py-1 rounded text-xs font-medium">
+                  <i data-lucide="car" class="w-3 h-3 mr-1 inline"></i>
+                  Current Location
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-between mt-3 text-sm">
+              <span class="text-gray-400">Connaught Place</span>
+              <span class="text-gray-400">19.4 km covered</span>
+              <span class="text-gray-400">Cyber City</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Integrated Vehicle & Journey Information -->
+        <div class="grid lg:grid-cols-2 gap-6">
+          <!-- Vehicle Details -->
+          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+        <div class="flex items-center justify-between mb-6">
+          <h2 class="text-2xl font-bold text-white flex items-center gap-3">
+            <i data-lucide="car" class="text-purple-400"></i>
+            Vehicle Information
+          </h2>
+          <span class="px-4 py-2 bg-green-500/20 text-green-400 rounded-full text-sm font-medium border border-green-500/30">
+            <i data-lucide="circle" class="w-3 h-3 mr-2 fill-current"></i>
+            Active
+          </span>
+        </div>
+
+        <!-- Vehicle Details Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-white/70 text-sm">Make & Model</span>
+              <i data-lucide="car" class="text-purple-400 w-4 h-4"></i>
+            </div>
+            <p class="text-white text-lg font-semibold">Maruti Suzuki Swift</p>
+          </div>
+
+          <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-white/70 text-sm">Year</span>
+              <i data-lucide="calendar" class="text-purple-400 w-4 h-4"></i>
+            </div>
+            <p class="text-white text-lg font-semibold">2022</p>
+          </div>
+
+          <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-white/70 text-sm">Registration Number</span>
+              <i data-lucide="hash" class="text-purple-400 w-4 h-4"></i>
+            </div>
+            <p class="text-white text-lg font-semibold">MH 12 AB 1234</p>
+          </div>
+
+          <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-white/70 text-sm">Fuel Type</span>
+              <i data-lucide="fuel" class="text-purple-400 w-4 h-4"></i>
+            </div>
+            <p class="text-white text-lg font-semibold">Petrol</p>
+          </div>
+
+          <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-white/70 text-sm">Color</span>
+              <i data-lucide="palette" class="text-purple-400 w-4 h-4"></i>
+            </div>
+            <p class="text-white text-lg font-semibold">Pearl Arctic White</p>
+          </div>
+
+          <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-white/70 text-sm">Current Speed</span>
+              <i data-lucide="gauge" class="text-purple-400 w-4 h-4"></i>
+            </div>
+            <p class="text-white text-lg font-semibold">65 km/h</p>
+          </div>
+
+          <!-- FastTag Information -->
+          <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-white/70 text-sm">FastTag ID</span>
+              <i data-lucide="credit-card" class="text-purple-400 w-4 h-4"></i>
+            </div>
+            <p class="text-white text-lg font-semibold">FT-2024-0891234</p>
+          </div>
+
+          <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-white/70 text-sm">Wallet Balance</span>
+              <i data-lucide="wallet" class="text-green-400 w-4 h-4"></i>
+            </div>
+            <p class="text-green-400 text-lg font-semibold">₹1,247.50</p>
+          </div>
+        </div>
+
+          <!-- Real-time Journey Analytics -->
+          <div class="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-xl font-bold text-white flex items-center gap-3">
+                <i data-lucide="route" class="text-neon-blue"></i>
+                Journey Analytics
+              </h3>
+              <div class="flex items-center gap-2 text-sm text-gray-400">
+                <i data-lucide="clock" class="w-4 h-4"></i>
+                Live updates
+              </div>
+            </div>
+
+        <!-- Journey Timeline -->
+        <div class="space-y-6">
+          <!-- Route Information -->
+          <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+            <h4 class="text-lg font-semibold text-white mb-4">Route Details</h4>
+              
+                <div>
+                  <p class="text-gray-400 text-sm">Started from</p>
+                  <p class="text-white font-semibold">Connaught Place, Delhi</p>
+                  <p class="text-gray-500 text-sm">Today, 2:15 PM</p>
+                </div>
+                
+                <div class="border-l-2 border-neon-blue/30 pl-4 ml-2">
+                  <div class="space-y-3 my-4">
+                    <div class="flex items-center space-x-2">
+                      <div class="w-2 h-2 bg-neon-blue rounded-full"></div>
+                      <p class="text-white text-sm">Passed Delhi-Gurgaon Toll</p>
+                      <span class="text-green-400 text-xs ml-auto">₹45 paid</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <div class="w-2 h-2 bg-neon-blue rounded-full animate-pulse"></div>
+                      <p class="text-neon-blue text-sm font-medium">Currently: Sector 18, Gurgaon</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                      <div class="w-2 h-2 bg-gray-500 rounded-full"></div>
+                      <p class="text-gray-400 text-sm">Next: DLF Cyber City Toll</p>
+                      <span class="text-orange-400 text-xs ml-auto">₹25 estimated</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div>
+                  <p class="text-gray-400 text-sm">Estimated arrival</p>
+                  <p class="text-white font-semibold">Cyber City, Gurgaon</p>
+                  <p class="text-neon-blue text-sm">Today, 3:45 PM</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Live Journey Statistics -->
+            <div class="bg-white/5 rounded-xl p-6 border border-white/10">
+              <h4 class="text-lg font-semibold text-white mb-4">Live Statistics</h4>
+              
+              <div class="grid grid-cols-2 gap-4">
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-neon-blue mb-1">1h 22m</div>
+                  <div class="text-sm text-white/70">Journey Time</div>
+                  <div class="text-xs text-green-400 mt-1">On schedule</div>
+                </div>
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-purple-400 mb-1">19.4 km</div>
+                  <div class="text-sm text-white/70">Distance Covered</div>
+                  <div class="text-xs text-blue-400 mt-1">9.1 km remaining</div>
+                </div>
+              </div>
+
+              <div class="mt-6 space-y-3">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-2">
+                    <i data-lucide="gauge" class="w-4 h-4 text-neon-blue"></i>
+                    <span class="text-white/70">Average Speed</span>
+                  </div>
+                  <span class="text-neon-blue font-semibold">58 km/h</span>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-2">
+                    <i data-lucide="fuel" class="w-4 h-4 text-orange-400"></i>
+                    <span class="text-white/70">Fuel Consumed</span>
+                  </div>
+                  <span class="text-orange-400 font-semibold">1.6 L</span>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-2">
+                    <i data-lucide="credit-card" class="w-4 h-4 text-red-400"></i>
+                    <span class="text-white/70">Toll Charges</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-red-400 font-semibold">₹45.00</span>
+                    <div class="text-xs text-gray-400">+₹25 estimated</div>
+                  </div>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-2">
+                    <i data-lucide="navigation" class="w-4 h-4 text-gray-400"></i>
+                    <span class="text-gray-400">Distance</span>
+                  </div>
+                  <span class="text-white font-semibold">28.5 km total</span>
+                </div>
+                
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center space-x-2">
+                    <i data-lucide="clock" class="w-4 h-4 text-green-400"></i>
+                    <span class="text-white/70">ETA</span>
+                  </div>
+                  <span class="text-green-400 font-semibold">23 min</span>
+                </div>
+              </div>
+
+              <!-- Cost Breakdown -->
+              <div class="mt-6 p-4 bg-white/5 rounded-lg border border-white/10">
+                <h5 class="text-sm font-semibold text-white mb-3">Journey Cost Breakdown</h5>
+                <div class="space-y-2">
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Fuel cost</span>
+                    <span class="text-orange-400">₹144.00</span>
+                  </div>
+                  <div class="flex justify-between text-sm">
+                    <span class="text-gray-400">Tolls paid</span>
+                    <span class="text-red-400">₹45.00</span>
+                  </div>
+                  <div class="flex justify-between text-sm border-t border-white/10 pt-2 mt-2">
+                    <span class="text-white font-medium">Total journey cost</span>
+                    <span class="text-neon-blue font-bold">₹189.00</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- Recent Trips -->
+        <div data-id="recent-trips" class="mt-8">
+          <div class="bg-card-bg/50 backdrop-blur-lg border border-gray-800 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-2xl font-bold text-white">Recent Trips</h2>
+              <button data-id="view-all-trips" class="text-neon-blue hover:underline">View All</button>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div class="bg-gray-800/30 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-3">
+                  <p class="text-white font-semibold">Delhi → Noida</p>
+                  <span class="text-gray-400 text-sm">Yesterday</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-400">Distance: 45 km</span>
+                  <span class="text-red-400">₹75.00</span>
+                </div>
+              </div>
+              
+              <div class="bg-gray-800/30 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-3">
+                  <p class="text-white font-semibold">Gurgaon → Delhi</p>
+                  <span class="text-gray-400 text-sm">2 days ago</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-400">Distance: 32 km</span>
+                  <span class="text-red-400">₹45.00</span>
+                </div>
+              </div>
+              
+              <div class="bg-gray-800/30 rounded-xl p-4">
+                <div class="flex items-center justify-between mb-3">
+                  <p class="text-white font-semibold">Mumbai → Pune</p>
+                  <span class="text-gray-400 text-sm">1 week ago</span>
+                </div>
+                <div class="flex items-center justify-between text-sm">
+                  <span class="text-gray-400">Distance: 148 km</span>
+                  <span class="text-red-400">₹280.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="footer-container" data-source="components/footer.html"></div>
+
+    <style>
+        /* Existing styles */
+        .dot-pulse {
+          width: 6px;
+          height: 6px;
+          background-color: #fff;
+          border-radius: 50%;
+          display: inline-block;
+          margin: 0 2px;
+          animation: pulse 2s infinite;
+        }
+        
+        /* Car Animation Styles */
+        .road-surface {
+          background: linear-gradient(to bottom, 
+            transparent 40%, 
+            #374151 40%, 
+            #4b5563 50%, 
+            #374151 60%, 
+            transparent 60%
+          );
+          height: 100%;
+        }
+        
+        .car-animation {
+          animation: carBounce 2s ease-in-out infinite;
+        }
+        
+        @keyframes carBounce {
+          0%, 100% { transform: translateY(0px) scale(1); }
+          50% { transform: translateY(-5px) scale(1.02); }
+        }
+        
+        .road-lines {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          background-image: repeating-linear-gradient(
+            90deg,
+            transparent,
+            transparent 15px,
+            #6b7280 15px,
+            #6b7280 25px
+          );
+          height: 100%;
+          animation: roadMove 2s linear infinite;
+        }
+        
+        @keyframes roadMove {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50px) translateY(-50%); }
+        }
+        
+        .speed-indicator {
+          animation: speedPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes speedPulse {
+          0%, 100% { transform: translateX(-50%) scale(1); }
+          50% { transform: translateX(-50%) scale(1.1); }
+        }
+        
+        .trail-effect {
+          animation: trailMove 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes trailMove {
+          0% { opacity: 0; transform: translateX(-20px); }
+          50% { opacity: 0.8; }
+          100% { opacity: 0; transform: translateX(20px); }
+        }
+        
+        .pulse-animation {
+          animation: statusPulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes statusPulse {
+          0%, 100% { opacity: 1; transform: scale(1); }
+          50% { opacity: 0.6; transform: scale(1.2); }
+        }
+        
+        /* Wheel and rim rotation */
+        .wheel-front, .wheel-rear, .rim-front, .rim-rear {
+          animation: wheelRotate 0.3s linear infinite;
+        }
+        
+        .spokes-front, .spokes-rear {
+          animation: wheelRotate 0.3s linear infinite;
+        }
+        
+        @keyframes wheelRotate {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        /* Sound wave effects */
+        .sound-wave-1 {
+          animation: soundWave 1s ease-in-out infinite;
+        }
+        
+        .sound-wave-2 {
+          animation: soundWave 1s ease-in-out infinite 0.2s;
+        }
+        
+        .sound-wave-3 {
+          animation: soundWave 1s ease-in-out infinite 0.4s;
+        }
+        
+        @keyframes soundWave {
+          0%, 100% { 
+            transform: scaleX(0.5); 
+            opacity: 0; 
+          }
+          50% { 
+            transform: scaleX(2); 
+            opacity: 1; 
+          }
+        }
+        
+        /* Enhanced car 3D effect */
+        .car-animation svg {
+          filter: drop-shadow(3px 6px 12px rgba(0, 0, 0, 0.4));
+          animation: carFloat 3s ease-in-out infinite;
+        }
+        
+        @keyframes headlightGlow {
+          0%, 100% { opacity: 0.8; }
+          50% { opacity: 1; filter: drop-shadow(0 0 8px #fbbf24); }
+        }
+        
+        @keyframes carFloat {
+          0%, 100% { transform: translateY(0px) rotateX(0deg); }
+          25% { transform: translateY(-2px) rotateX(1deg); }
+          75% { transform: translateY(-1px) rotateX(-0.5deg); }
+        }
+        
+      </style>
+
+      <script type="module">
+      import { loadComponent } from './scripts/components/loader.js';
+      
+      // Load shared components
+      loadComponent('#navbar-container');
+      loadComponent('#footer-container');
+      
+      // Refresh location button
+      document.querySelector('[data-id="refresh-location"]')?.addEventListener('click', () => {
+        // Simulate refreshing location
+        const button = document.querySelector('[data-id="refresh-location"] i');
+        button.classList.add('animate-spin');
+        setTimeout(() => {
+          button.classList.remove('animate-spin');
+        }, 1000);
+      });
+
+      // Initialize icons after components are loaded
+      setTimeout(() => {
+        lucide.createIcons();
+      }, 100);
+    </script>
+  </body>
+</html>

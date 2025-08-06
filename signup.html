@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - FastTag Manager</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://use.typekit.net/yjp3aho.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'sofia': ['sofia-pro', 'sans-serif']
+          },
+          colors: {
+            'neon-blue': '#00f5ff',
+            'neon-purple': '#9d00ff',
+            'dark-bg': '#0a0a0f',
+            'card-bg': '#1a1a24'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sofia bg-gradient-to-br from-dark-bg via-gray-900 to-purple-900 min-h-screen">
+  <div id="navbar-container" data-source="components/navbar.html"></div>
+  
+  <main class="pt-20 px-4 py-12">
+    <div class="container mx-auto max-w-md">
+      <div data-id="signup-card" class="bg-card-bg/50 backdrop-blur-lg border border-gray-800 rounded-3xl p-8">
+        <div data-id="signup-header" class="text-center mb-8">
+          <div class="w-20 h-20 bg-gradient-to-r from-neon-blue to-neon-purple rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <i data-lucide="user-plus" class="w-10 h-10 text-white"></i>
+          </div>
+          <h1 class="text-3xl font-bold text-white mb-2">Create Account</h1>
+          <p class="text-gray-400">Join the future of toll management</p>
+        </div>
+
+        <form data-id="signup-form" class="space-y-6">
+          <div data-id="name-field">
+            <label for="fullName" class="block text-white font-semibold mb-2">Full Name</label>
+            <input type="text" id="fullName" name="fullName" required 
+                   class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:border-neon-blue focus:outline-none focus:ring-2 focus:ring-neon-blue/20 transition-all duration-300"
+                   placeholder="Enter your full name">
+          </div>
+
+          <div data-id="email-field">
+            <label for="email" class="block text-white font-semibold mb-2">Email Address</label>
+            <input type="email" id="email" name="email" required 
+                   class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:border-neon-blue focus:outline-none focus:ring-2 focus:ring-neon-blue/20 transition-all duration-300"
+                   placeholder="Enter your email">
+          </div>
+
+          <div data-id="phone-field">
+            <label for="phone" class="block text-white font-semibold mb-2">Mobile Number</label>
+            <input type="tel" id="phone" name="phone" required 
+                   class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:border-neon-blue focus:outline-none focus:ring-2 focus:ring-neon-blue/20 transition-all duration-300"
+                   placeholder="Enter your mobile number">
+            <p class="text-sm text-gray-400 mt-1">This number will be linked to your FastTag</p>
+          </div>
+
+          <div data-id="password-field">
+            <label for="password" class="block text-white font-semibold mb-2">Password</label>
+            <input type="password" id="password" name="password" required 
+                   class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:border-neon-blue focus:outline-none focus:ring-2 focus:ring-neon-blue/20 transition-all duration-300"
+                   placeholder="Create a strong password">
+          </div>
+
+          <div data-id="confirm-password-field">
+            <label for="confirmPassword" class="block text-white font-semibold mb-2">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required 
+                   class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:border-neon-blue focus:outline-none focus:ring-2 focus:ring-neon-blue/20 transition-all duration-300"
+                   placeholder="Confirm your password">
+          </div>
+
+          <div data-id="terms-field" class="flex items-start space-x-3">
+            <input type="checkbox" id="terms" name="terms" required 
+                   class="mt-1 w-5 h-5 text-neon-blue bg-gray-800 border-gray-600 rounded focus:ring-neon-blue focus:ring-2">
+            <label for="terms" class="text-sm text-gray-400">
+              I agree to the <a href="#" class="text-neon-blue hover:underline">Terms of Service</a> and <a href="#" class="text-neon-blue hover:underline">Privacy Policy</a>
+            </label>
+          </div>
+
+          <button type="submit" data-id="signup-submit" class="w-full bg-gradient-to-r from-neon-blue to-neon-purple text-white py-4 rounded-xl font-semibold text-lg hover:shadow-lg hover:shadow-neon-blue/50 transition-all duration-300">
+            Create Account
+          </button>
+        </form>
+
+        <div data-id="signup-footer" class="text-center mt-8">
+          <p class="text-gray-400">Already have an account? 
+            <a href="signin.html" class="text-neon-blue hover:underline font-semibold">Sign In</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-container" data-source="components/footer.html"></div>
+
+  <script type="module">
+    import { loadComponent } from './scripts/components/loader.js';
+    
+    // Load shared components
+    loadComponent('#navbar-container');
+    loadComponent('#footer-container');
+    
+    // Initialize icons after components are loaded
+    setTimeout(() => {
+      lucide.createIcons();
+    }, 100);
+
+    // Form validation and submission
+    document.querySelector('[data-id="signup-form"]').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const password = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+      
+      if (password !== confirmPassword) {
+        alert('Passwords do not match!');
+        return;
+      }
+      
+      // Simulate successful signup
+      alert('Account created successfully! Redirecting to dashboard...');
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

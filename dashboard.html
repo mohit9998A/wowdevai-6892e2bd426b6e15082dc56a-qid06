@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - FastTag Manager</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://use.typekit.net/yjp3aho.css">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'sofia': ['sofia-pro', 'sans-serif']
+          },
+          colors: {
+            'neon-blue': '#00f5ff',
+            'neon-purple': '#9d00ff',
+            'dark-bg': '#0a0a0f',
+            'card-bg': '#1a1a24'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sofia bg-gradient-to-br from-dark-bg via-gray-900 to-purple-900 min-h-screen">
+  <div id="navbar-container" data-source="components/navbar.html"></div>
+  
+  <main class="pt-20 px-4 py-8">
+    <div class="container mx-auto max-w-7xl">
+      <!-- Welcome Section -->
+      <div data-id="welcome-section" class="mb-8">
+        <h1 data-id="dashboard-title" class="text-3xl md:text-4xl font-bold text-white mb-2">
+          Welcome back, <span class="text-neon-blue">John</span>
+        </h1>
+        <p data-id="dashboard-subtitle" class="text-gray-400">Manage your FastTag account and track your journeys</p>
+      </div>
+
+      <!-- Stats Cards -->
+      <div data-id="stats-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div data-id="balance-card" class="bg-card-bg/50 backdrop-blur-lg border border-gray-800 rounded-2xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-neon-blue rounded-xl flex items-center justify-center">
+              <i data-lucide="wallet" class="w-6 h-6 text-white"></i>
+            </div>
+            <button data-id="recharge-btn" class="text-neon-blue hover:bg-neon-blue/10 p-2 rounded-lg transition-colors duration-300">
+              <i data-lucide="plus" class="w-5 h-5"></i>
+            </button>
+          </div>
+          <h3 class="text-gray-400 text-sm">Current Balance</h3>
+          <p class="text-2xl font-bold text-white">₹1,248.50</p>
+        </div>
+
+        <div data-id="trips-card" class="bg-card-bg/50 backdrop-blur-lg border border-gray-800 rounded-2xl p-6">
+          <div class="w-12 h-12 bg-gradient-to-r from-neon-blue to-neon-purple rounded-xl flex items-center justify-center mb-4">
+            <i data-lucide="car" class="w-6 h-6 text-white"></i>
+          </div>
+          <h3 class="text-gray-400 text-sm">Total Trips</h3>
+          <p class="text-2xl font-bold text-white">47</p>
+        </div>
+
+        <div data-id="spent-card" class="bg-card-bg/50 backdrop-blur-lg border border-gray-800 rounded-2xl p-6">
+          <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4">
+            <i data-lucide="trending-down" class="w-6 h-6 text-white"></i>
+          </div>
+          <h3 class="text-gray-400 text-sm">This Month</h3>
+          <p class="text-2xl font-bold text-white">₹892.30</p>
+        </div>
+
+        <div data-id="savings-card" class="bg-card-bg/50 backdrop-blur-lg border border-gray-800 rounded-2xl p-6">
+          <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mb-4">
+            <i data-lucide="trending-up" class="w-6 h-6 text-white"></i>
+          </div>
+          <h3 class="text-gray-400 text-sm">Savings</h3>
+          <p class="text-2xl font-bold text-white">₹156.80</p>
+        </div>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="grid lg:grid-cols-3 gap-8">
+        <!-- Recent Transactions -->
+        <div data-id="transactions-section" class="lg:col-span-2">
+          <div class="bg-card-bg/50 backdrop-blur-lg border border-gray-800 rounded-2xl p-6">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="text-2xl font-bold text-white">Recent Transactions</h2>
+              <a href="#" data-id="view-all-transactions" class="text-neon-blue hover:underline">View All</a>
+            </div>
+            
+            <div data-id="transactions-list" class="space-y-4">
+              <div class="flex items-center justify-between p-4 bg-gray-800/30 rounded-xl">
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
+                    <i data-lucide="minus" class="w-5 h-5 text-white"></i>
+                  </div>
+                  <div>
+                    <p class="text-white font-semibold">Delhi-Gurgaon Toll</p>
+                    <p class="text-gray-400 text-sm">Today, 2:30 PM</p>
+                  </div>
+                </div>
+                <p class="text-red-400 font-semibold">-₹45.00</p>
+              </div>
+
+              <div class="flex items-center justify-between p-4 bg-gray-800/30 rounded-xl">
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                    <i data-lucide="plus" class="w-5 h-5 text-white"></i>
+                  </div>
+                  <div>
+                    <p class="text-white font-semibold">Account Recharge</p>
+                    <p class="text-gray-400 text-sm">Yesterday, 9:15 AM</p>
+                  </div>
+                </div>
+                <p class="text-green-400 font-semibold">+₹500.00</p>
+              </div>
+
+              <div class="flex items-center justify-between p-4 bg-gray-800/30 rounded-xl">
+                <div class="flex items-center space-x-4">
+                  <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
+                    <i data-lucide="minus" class="w-5 h-5 text-white"></i>
+                  </div>
+                  <div>
+                    <p class="text-white font-semibold">Mumbai-Pune Highway</p>
+                    <p class="text-gray-400 text-sm">2 days ago, 6:45 PM</p>
+                  </div>
+                </div>
+                <p class="text-red-400 font-semibold">-₹120.00</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Actions & Vehicle Status -->
+        <div data-id="sidebar-section" class="space-y-6">
+          <!-- Quick Actions -->
+          <div class="bg-card-bg/50 backdrop-blur-lg border border-gray-800 rounded-2xl p-6">
+            <h3 class="text-xl font-bold text-white mb-4">Quick Actions</h3>
+            <div class="space-y-3">
+              <button data-id="recharge-action" class="w-full bg-gradient-to-r from-neon-blue to-neon-purple text-white p-4 rounded-xl font-semibold hover:shadow-lg hover:shadow-neon-blue/50 transition-all duration-300 flex items-center justify-center space-x-2">
+                <i data-lucide="zap" class="w-5 h-5"></i>
+                <span>Recharge Now</span>
+              </button>
+              <button data-id="track-vehicle" class="w-full bg-gray-800 text-white p-4 rounded-xl font-semibold hover:bg-gray-700 transition-all duration-300 flex items-center justify-center space-x-2">
+                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                <span>Track Vehicle</span>
+              </button>
+              <button data-id="download-statement" class="w-full bg-gray-800 text-white p-4 rounded-xl font-semibold hover:bg-gray-700 transition-all duration-300 flex items-center justify-center space-x-2">
+                <i data-lucide="download" class="w-5 h-5"></i>
+                <span>Download Statement</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Vehicle Status -->
+          <div class="bg-card-bg/50 backdrop-blur-lg border border-gray-800 rounded-2xl p-6">
+            <h3 class="text-xl font-bold text-white mb-4">Vehicle Status</h3>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-gray-400">FastTag ID</span>
+                <span class="text-white font-semibold">FT123456789</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-400">Vehicle</span>
+                <span class="text-white font-semibold">DL 01 AB 1234</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-400">Status</span>
+                <span class="text-green-400 font-semibold flex items-center space-x-1">
+                  <i data-lucide="check-circle" class="w-4 h-4"></i>
+                  <span>Active</span>
+                </span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-gray-400">Last Location</span>
+                <span class="text-neon-blue font-semibold cursor-pointer hover:underline">View on Map</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Recharge Modal -->
+  <div data-id="recharge-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-card-bg border border-gray-800 rounded-3xl p-8 max-w-md w-full">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold text-white">Recharge FastTag</h3>
+        <button data-id="close-modal" class="text-gray-400 hover:text-white">
+          <i data-lucide="x" class="w-6 h-6"></i>
+        </button>
+      </div>
+      
+      <div class="space-y-4 mb-6">
+        <div class="grid grid-cols-3 gap-3">
+          <button data-id="amount-200" class="bg-gray-800 hover:bg-neon-blue/20 border border-gray-700 hover:border-neon-blue text-white p-3 rounded-lg transition-all duration-300">₹200</button>
+          <button data-id="amount-500" class="bg-gray-800 hover:bg-neon-blue/20 border border-gray-700 hover:border-neon-blue text-white p-3 rounded-lg transition-all duration-300">₹500</button>
+          <button data-id="amount-1000" class="bg-gray-800 hover:bg-neon-blue/20 border border-gray-700 hover:border-neon-blue text-white p-3 rounded-lg transition-all duration-300">₹1000</button>
+        </div>
+        <input type="number" data-id="custom-amount" placeholder="Enter custom amount" class="w-full bg-gray-800/50 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-400">
+      </div>
+      
+      <button data-id="proceed-payment" class="w-full bg-gradient-to-r from-neon-blue to-neon-purple text-white py-4 rounded-xl font-semibold text-lg">
+        Proceed to Payment
+      </button>
+    </div>
+  </div>
+
+  <div id="footer-container" data-source="components/footer.html"></div>
+
+  <script type="module">
+    import { loadComponent } from './scripts/components/loader.js';
+    
+    // Load shared components
+    loadComponent('#navbar-container');
+    loadComponent('#footer-container');
+    
+    // Initialize icons after components are loaded
+    setTimeout(() => {
+      lucide.createIcons();
+    }, 100);
+
+    // Modal functionality
+    const rechargeModal = document.querySelector('[data-id="recharge-modal"]');
+    const rechargeBtn = document.querySelector('[data-id="recharge-btn"]');
+    const rechargeAction = document.querySelector('[data-id="recharge-action"]');
+    const closeModal = document.querySelector('[data-id="close-modal"]');
+    const trackVehicle = document.querySelector('[data-id="track-vehicle"]');
+
+    [rechargeBtn, rechargeAction].forEach(btn => {
+      btn?.addEventListener('click', () => {
+        rechargeModal.classList.remove('hidden');
+      });
+    });
+
+    closeModal?.addEventListener('click', () => {
+      rechargeModal.classList.add('hidden');
+    });
+
+    rechargeModal?.addEventListener('click', (e) => {
+      if (e.target === rechargeModal) {
+        rechargeModal.classList.add('hidden');
+      }
+    });
+
+    // Amount selection
+    document.querySelectorAll('[data-id^="amount-"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelector('[data-id="custom-amount"]').value = btn.textContent.replace('₹', '');
+      });
+    });
+
+    // Track vehicle navigation
+    trackVehicle?.addEventListener('click', () => {
+      window.location.href = 'tracking.html';
+    });
+  </script>
+</body>
+</html>
